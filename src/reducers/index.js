@@ -23,7 +23,8 @@ const todo = (state, action) => {
 			description: action.description,
 			priority: action.priority,
 			planeTime: action.planeTime,
-			doneTime: action.doneTime
+			doneTime: action.doneTime,
+			overdue: false,
 		};
 		case 'TOGGLE_TODO': if (state.id !== action.id) { return state }
 							return { ...state, completed: !state.completed };
@@ -41,13 +42,26 @@ const todo = (state, action) => {
 	}
 };
 
-const priorityFilter = (state = 'all', action) => {
+export const returnNowTime = ()=>{
+	let hour = new Date().getHours(); if (hour.toString().length !== 2) { hour = "0"+hour.toString() }
+	let minute = new Date().getMinutes(); if (minute.toString().length !== 2) { minute = "0"+ minute.toString()}
+	let month = (new Date().getMonth()+1); if (month.toString().length !== 2 ) { month = "0"+ month.toString()}
+	let nowTime = 
+		new Date().getFullYear() + '-' +
+		month + '-' +
+		new Date().getDate()+'T'+
+		hour+':'+
+		minute;
+	return nowTime
+}
+
+const timeNow = (state = returnNowTime(), action) => {
 	switch (action.type){
-		case 'SET_PRIORITY_FILTER': return action.filter;
+		case 'CHANGE_TIME_NOW': return action.newTime;
 		default: return state;
 	}
 }
 
-const todoApp = combineReducers({ todos, priorityFilter })
+const todoApp = combineReducers({ todos, timeNow })
 
 export default todoApp;

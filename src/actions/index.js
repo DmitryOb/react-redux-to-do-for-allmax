@@ -44,3 +44,8 @@ export const changeDoneTime = (id, doneTime) => ({
 	id,
 	doneTime
 })
+
+export const changeTimeNow = (newTime) => ({
+	type: 'CHANGE_TIME_NOW',
+	newTime
+})

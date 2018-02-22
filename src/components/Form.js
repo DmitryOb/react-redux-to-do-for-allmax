@@ -1,9 +1,9 @@
 import React, {Component} from 'react';
-import styles from '../styles.css';
 import { connect } from 'react-redux';
 import * as actions from '../actions';
 
 class Form extends Component {
+
 	componentDidMount(){
 		const { id, value } = this.props;
 		document.getElementById(id).querySelectorAll('input').forEach(e => {
@@ -11,13 +11,14 @@ class Form extends Component {
 			}
 		)
 	}
+
 	render(){
 		const { id, onChange } = this.props;
 		return(
 			<td width="200">
 				<form
 					id={id}
-					className={styles.formRadio}
+					className={'formRadio'}
 					onChange={(e)=>onChange(id, e.target.value)}
 				>
 					<label><input type="radio" name="importance" value="normal" />Normal</label>
@@ -29,12 +30,6 @@ class Form extends Component {
 	}
 }
 
-const mapStateToProps = (state ) => { 
-	return {
-
-	}
-}
-
-Form = connect(mapStateToProps, actions)(Form);
+Form = connect( (state)=>{ return { state } }, actions )(Form);
 
 export default Form;

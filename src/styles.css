@@ -1,15 +1,19 @@
-a:visited { color: #00e; }
+a:visited {
+	color: #00e;
+}
 
-.heading { background-color: #8080804a; }
+.heading {
+	background-color: #8080804a;
+}
 
-.noborder { border: 0; }
+.overdue {
+	background-color: red;
+}
 
+.completed {
+	background-color: green;
+}
 
-
-p { float: left; }
-
-/*
-.myClass { background-color: green; }
-.invisible { display: none; }
-.timeisgone { background-color: red; }
-*/
+p {
+	float: left;
+}

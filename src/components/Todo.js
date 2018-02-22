@@ -1,15 +1,18 @@
 import React, {Component} from 'react';
-import styles from '../styles.css';
 import { connect } from 'react-redux';
 import * as actions from '../actions';
 import Form from './Form';
 
 class Todo extends Component {
+
 	render(){
-		const { id, toggleTodo, changeName, changeDescription, changePriority, deleteItem, changePlaneTime, changeDoneTime } = this.props;
-		const { name, description, completed, priority, planeTime, doneTime } = this.props
+		const { toggleTodo, changeName, changeDescription, changePriority, deleteItem, changePlaneTime, changeDoneTime } = this.props;
+		const { id, name, description, completed, priority, planeTime, doneTime, timeNow } = this.props;
+		let overdue = false;
+		if (planeTime && doneTime && doneTime>planeTime && timeNow>planeTime) overdue = true;
+		if (timeNow>planeTime) overdue = true;
 		return(
-			<tr>
+			<tr className={(overdue ? 'overdue': '') || (completed ? 'completed' : '')}>
 
 				<td width="200">
 					<input 
@@ -56,7 +59,7 @@ class Todo extends Component {
 					/>
 				</td>
 
-				<td className={styles.noborder} width="200">
+				<td width="200">
 					<button onClick={()=>deleteItem(id)}>
 						Delete
 					</button>
@@ -69,10 +72,9 @@ class Todo extends Component {
 
 const mapStateToProps = (state ) => { 
 	return {
-
+		timeNow : state.timeNow,
 	}
 }
-
 Todo = connect(mapStateToProps, actions)(Todo);
 
 export default Todo;
